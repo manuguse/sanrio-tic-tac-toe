@@ -19,7 +19,5 @@ class AppColors {
 
   static const Color hover = Color(0xFFDDA0DD);
 
-  static const Color kuromiNoIcon = Color(0xFF9F9A93);
-
-  static const Color myMelodyNoIcon = Color(0xFFEE86B4);
+  static const Color black = Color(0xFF151315);
 }

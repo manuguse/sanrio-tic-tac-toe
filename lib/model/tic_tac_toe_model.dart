@@ -40,7 +40,7 @@ class TicTacToeModel {
       gameStatus = Texts.getDrawText();
       gameOver = true;
     } else {
-      currentPlayer = 1 - currentPlayer; // alternates between 0 and 1
+      currentPlayer = 1 - currentPlayer;
       gameStatus = Texts.getTurnText(players[currentPlayer].getName);
     }
 

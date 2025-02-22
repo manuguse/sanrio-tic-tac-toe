@@ -14,7 +14,7 @@ class TicTacToeApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tic Tac Toe',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.purple,
         fontFamily: 'Poppins',
       ),
       home: const PlayerSettingsView(),

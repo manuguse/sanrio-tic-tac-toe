@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ttt/utils/player.dart';
+import 'package:flutter_ttt/utils/utils.dart';
 
 import '../controller/tic_tac_toe_controller.dart';
 import '../model/tic_tac_toe_model.dart';
@@ -178,7 +179,7 @@ class _TicTacToeViewState extends State<TicTacToeView> {
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: AppColors.grid,
-        border: Border.all(color: AppColors.grid, width: 7),
+        border: Border.all(color: AppColors.grid, width: 4),
       ),
       child: AspectRatio(
         aspectRatio: 1,
@@ -267,19 +268,6 @@ class _TicTacToeViewState extends State<TicTacToeView> {
           ),
         ),
       ],
-    );
-  }
-}
-
-// Extensão para facilitar o uso do .darker() como no Java
-extension ColorExtension on Color {
-  Color darker() {
-    const factor = 0.8;
-    return Color.fromARGB(
-      alpha,
-      (red * factor).round(),
-      (green * factor).round(),
-      (blue * factor).round(),
     );
   }
 }
