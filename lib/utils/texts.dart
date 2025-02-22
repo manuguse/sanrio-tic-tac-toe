@@ -1,8 +1,13 @@
 class Texts {
+
   Texts._();
 
   static String getTurnText(String player) {
     return "${player.toLowerCase()}'s turn to play";
+  }
+
+  static String getMissingInformation() {
+    return "Ensure names are filled and avatars are different.";
   }
 
   static String getWinText(String player) {

@@ -32,9 +32,7 @@ class _TicTacToeViewState extends State<TicTacToeView> {
   void initState() {
     super.initState();
 
-
-
-    _model = TicTacToeModel();
+    _model = TicTacToeModel(widget.player1, widget.player2);
     _board = List.generate(3, (_) => List.filled(3, null));
     _statusText = "Game starting...";
 

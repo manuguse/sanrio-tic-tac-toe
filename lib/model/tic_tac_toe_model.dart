@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_ttt/utils/player.dart';
+
 import '../utils/texts.dart';
-import '../utils/utils.dart';
 
 class TicTacToeModel {
   late List<List<int?>> board;
@@ -9,21 +8,20 @@ class TicTacToeModel {
   late bool gameOver;
   late String gameStatus;
   late List<Player> players;
+  late int startingPlayer;
 
-  TicTacToeModel()
+  TicTacToeModel(Player player1, Player player2)
       : board = List.generate(3, (_) => List.filled(3, null)),
         currentPlayer = 0,
+        startingPlayer = 0,
         gameOver = false,
-        gameStatus = Texts.getTurnText("Player 1"),
-        players = [
-          Player(name: "Player 1", defaultImage: Utils.defaultAvatar),
-          Player(name: "Player 2", defaultImage: Utils.defaultAvatar)
-        ];
+        gameStatus = Texts.getTurnText(player1.getName),
+        players = [player1, player2];
 
   void initGame() {
-    // Initialize board with nulls (equivalent to Optional.empty())
     board = List.generate(3, (_) => List.filled(3, null));
-    currentPlayer = 0;
+    startingPlayer = 1 - startingPlayer;
+    currentPlayer = startingPlayer;
     gameOver = false;
     gameStatus = Texts.getTurnText(players[currentPlayer].getName);
   }

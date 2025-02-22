@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ttt/player_setting_screen.dart';
+import 'package:flutter_ttt/view/player_settings_view.dart';
 import 'view/tic_tac_toe_view.dart';
 
 void main() {
@@ -17,8 +17,7 @@ class TicTacToeApp extends StatelessWidget {
         primarySwatch: Colors.green,
         fontFamily: 'Poppins',
       ),
-      home: const PlayerSettingsScreen(),
-      // home: const TicTacToeView(),
+      home: const PlayerSettingsView(),
       debugShowCheckedModeBanner: false,
     );
   }
