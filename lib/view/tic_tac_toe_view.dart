@@ -177,7 +177,13 @@ class _TicTacToeViewState extends State<TicTacToeView> {
   Widget _buildGridPanel() {
     return Container(
       padding: const EdgeInsets.all(5),
+
       decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/grid.png'),
+          fit: BoxFit.cover,
+          opacity: 0.1,
+        ),
         color: AppColors.grid,
         border: Border.all(color: AppColors.grid, width: 4),
       ),

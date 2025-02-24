@@ -3,8 +3,12 @@ import '../model/player_settings_model.dart';
 import '../utils/image_utils.dart';
 
 class PlayerSettingsController extends ChangeNotifier {
-  final TextEditingController player1Controller = TextEditingController(text: "Player 1");
-  final TextEditingController player2Controller = TextEditingController(text: "Player 2");
+  final TextEditingController player1Controller = TextEditingController(
+    text: "Player 1",
+  );
+  final TextEditingController player2Controller = TextEditingController(
+    text: "Player 2",
+  );
 
   int activePlayer = 1; // 1 para Player 1, 2 para Player 2
 
@@ -16,8 +20,16 @@ class PlayerSettingsController extends ChangeNotifier {
 
   PlayerSettingsController() {
     playerIcons = ImageUtils.loadPlayerIcons();
-    player1 = PlayerSettingsModel(name: "Player 1", avatarIndex: 0, avatarImage: playerIcons[0]);
-    player2 = PlayerSettingsModel(name: "Player 2", avatarIndex: 1, avatarImage: playerIcons[1]);
+    player1 = PlayerSettingsModel(
+      name: "Player 1",
+      avatarIndex: 0,
+      avatarImage: playerIcons[0],
+    );
+    player2 = PlayerSettingsModel(
+      name: "Player 2",
+      avatarIndex: 1,
+      avatarImage: playerIcons[1],
+    );
   }
 
   void selectAvatar(int index) {
@@ -37,13 +49,19 @@ class PlayerSettingsController extends ChangeNotifier {
   }
 
   bool validatePlayers() {
-    if (player1Controller.text.trim().isEmpty || player2Controller.text.trim().isEmpty) {
+    if (player1Controller.text.trim().isEmpty ||
+        player2Controller.text.trim().isEmpty) {
       return false;
     }
 
     if (player1.avatarIndex == player2.avatarIndex) {
       return false;
     }
+
+    if (player1Controller.text == player2Controller.text) {
+      return false;
+    }
+
     return true;
   }
 

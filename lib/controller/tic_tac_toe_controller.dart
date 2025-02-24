@@ -21,7 +21,7 @@ class TicTacToeController {
         if (model.makeMove(row, col)) {
             updateView();
 
-            if (model.isGameOver()) {
+            if (model.isGameOver) {
                 gameOver();
             }
         }

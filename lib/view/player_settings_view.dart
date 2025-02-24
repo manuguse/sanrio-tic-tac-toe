@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ttt/components/custom_button.dart';
+import 'package:flutter_ttt/components/player_settings_card.dart';
 import 'package:flutter_ttt/view/tic_tac_toe_view.dart';
 import 'package:provider/provider.dart';
 
@@ -37,20 +38,22 @@ class PlayerSettingsView extends StatelessWidget {
                       const Text(
                         "Customize Your Players",
                         style: TextStyle(
+                          fontFamily: 'Schoolbell',
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 28),
 
                       GestureDetector(
                         onTap: () => controller.switchActivePlayer(1),
-                        child: _buildPlayerSettingsCard(
-                          context,
-                          controller,
-                          controller.player1,
-                          1,
+                        child: PlayerSettingsCard(
+                          player: controller.player1,
+                          playerNumber: 1,
+                          isActive: controller.activePlayer == 1,
+                          onFocused: () => controller.switchActivePlayer(1),
+                          playerTextEditingController: controller.player1Controller,
                         ),
                       ),
 
@@ -58,11 +61,12 @@ class PlayerSettingsView extends StatelessWidget {
 
                       GestureDetector(
                         onTap: () => controller.switchActivePlayer(2),
-                        child: _buildPlayerSettingsCard(
-                          context,
-                          controller,
-                          controller.player2,
-                          2,
+                        child: PlayerSettingsCard(
+                          player: controller.player2,
+                          playerNumber: 2,
+                          isActive: controller.activePlayer == 2,
+                          onFocused: () => controller.switchActivePlayer(2),
+                          playerTextEditingController: controller.player2Controller,
                         ),
                       ),
 
@@ -77,40 +81,40 @@ class PlayerSettingsView extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
 
-                      Expanded(
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 5,
+                      GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
+                            ),
+                        itemCount: controller.availableAvatars.length,
+                        itemBuilder: (context, index) {
+                          bool isSelected =
+                              (controller.activePlayer == 1 &&
+                                  controller.player1.avatarIndex == index) ||
+                              (controller.activePlayer == 2 &&
+                                  controller.player2.avatarIndex == index);
+                          return GestureDetector(
+                            onTap: () => controller.selectAvatar(index),
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border:
+                                    isSelected
+                                        ? Border.all(
+                                          color: AppColors.grid,
+                                          width: 3,
+                                        )
+                                        : null,
                               ),
-                          itemCount: controller.availableAvatars.length,
-                          itemBuilder: (context, index) {
-                            bool isSelected =
-                                (controller.activePlayer == 1 &&
-                                    controller.player1.avatarIndex == index) ||
-                                (controller.activePlayer == 2 &&
-                                    controller.player2.avatarIndex == index);
-                            return GestureDetector(
-                              onTap: () => controller.selectAvatar(index),
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border:
-                                      isSelected
-                                          ? Border.all(
-                                            color: AppColors.grid,
-                                            width: 3,
-                                          )
-                                          : null,
-                                ),
-                                child: controller.availableAvatars[index],
-                              ),
-                            );
-                          },
-                        ),
+                              child: controller.availableAvatars[index],
+                            ),
+                          );
+                        },
                       ),
 
                       const Spacer(),
@@ -130,63 +134,6 @@ class PlayerSettingsView extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayerSettingsCard(
-    BuildContext context,
-    PlayerSettingsController controller,
-    PlayerSettingsModel player,
-    int playerNumber,
-  ) {
-    bool isActive = controller.activePlayer == playerNumber;
-
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side:
-            isActive
-                ? BorderSide(color: AppColors.grid, width: 3)
-                : BorderSide.none,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Container(
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(shape: BoxShape.circle),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipOval(child: player.avatarImage),
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: TextField(
-                controller:
-                    playerNumber == 1
-                        ? controller.player1Controller
-                        : controller.player2Controller,
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                ),
-                style: const TextStyle(fontSize: 16),
-                maxLength: 15,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void _startGame(BuildContext context, PlayerSettingsController controller) {
     if (!controller.validatePlayers()) {
       ScaffoldMessenger.of(
@@ -195,7 +142,7 @@ class PlayerSettingsView extends StatelessWidget {
       return;
     }
 
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
           return TicTacToeView(
